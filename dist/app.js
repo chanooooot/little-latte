@@ -1,4 +1,4 @@
-import { SIZE, ROUND_SECONDS, ORDERS, targetMask, pourSegment, scoreMask, secondsLeft, inCup, tiltAim } from './game.js?v=orders5';
+import { SIZE, ROUND_SECONDS, ORDERS, targetMask, pourSegment, scoreMask, secondsLeft, inCup, tiltAim } from './game.js?v=orders6';
 import { createScene } from './scene.js';
 
 const $ = id => document.getElementById(id);
@@ -13,23 +13,33 @@ let pointerDown = false, keyboardPour = false, pointerId = null, previous = null
 let order = ORDERS[0], target = targetMask(order.id);
 
 function showOrder() {
-  $('client-name').textContent = order.client;
-  $('order-name').textContent = order.name;
   $('client-avatar').style.setProperty('--avatar', order.color);
+  $('target-preview').setAttribute('aria-label', `Client's finished ${order.name} latte example`);
   drawArt($('target-preview'), target);
 }
 
 function drawArt(canvas, art) {
-  const context = canvas.getContext('2d'), preview = context.createImageData(SIZE, SIZE);
+  const context = canvas.getContext('2d'), size = canvas.width, center = size / 2, radius = size * .35;
+  context.clearRect(0, 0, size, size);
+  context.save();
+  context.shadowColor = '#4a311a26'; context.shadowBlur = size * .06; context.shadowOffsetY = size * .02;
+  context.fillStyle = '#ebe4d6'; context.beginPath(); context.arc(center, center, radius * 1.18, 0, Math.PI * 2); context.fill();
+  context.shadowColor = 'transparent';
+  context.strokeStyle = '#b7c8ae'; context.lineWidth = size * .055; context.beginPath(); context.ellipse(center + radius * 1.03, center, radius * .2, radius * .24, 0, 0, Math.PI * 2); context.stroke();
+  context.fillStyle = '#f8f1e2'; context.beginPath(); context.arc(center, center, radius * 1.04, 0, Math.PI * 2); context.fill();
+  const coffee = context.createRadialGradient(center - radius * .2, center - radius * .2, 0, center, center, radius);
+  coffee.addColorStop(0, '#aa6c38'); coffee.addColorStop(.8, '#71401f'); coffee.addColorStop(1, '#b9793f');
+  context.fillStyle = coffee; context.beginPath(); context.arc(center, center, radius, 0, Math.PI * 2); context.fill(); context.clip();
+  const surface = document.createElement('canvas'); surface.width = surface.height = SIZE;
+  const preview = surface.getContext('2d').createImageData(SIZE, SIZE);
   for (let index = 0; index < art.length; index++) {
     const pixel = index * 4;
     const milk = art[index] > 0;
-    preview.data[pixel] = milk ? 255 : 55;
-    preview.data[pixel + 1] = milk ? 252 : 33;
-    preview.data[pixel + 2] = milk ? 239 : 22;
-    preview.data[pixel + 3] = 255;
+    preview.data[pixel] = 255; preview.data[pixel + 1] = 248; preview.data[pixel + 2] = 231;
+    preview.data[pixel + 3] = milk ? 255 : 0;
   }
-  context.putImageData(preview, 0, 0);
+  surface.getContext('2d').putImageData(preview, 0, 0);
+  context.drawImage(surface, center - radius, center - radius, radius * 2, radius * 2); context.restore();
 }
 
 function nextOrder() {
@@ -106,7 +116,6 @@ function finishRound() {
   phase = 'result'; resetInput(); stopTilt();
   $('play-hint').hidden = true; $('finish').hidden = true; $('recenter').hidden = true;
   $('score').textContent = scoreMask(mask, target);
-  $('result-client').textContent = order.client;
   drawArt($('your-preview'), mask); drawArt($('order-preview'), target);
   $('result-panel').hidden = false; $('again').focus({ preventScroll: true });
 }

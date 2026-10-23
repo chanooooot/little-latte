@@ -14,7 +14,7 @@
     <main>
       <section class="stage" aria-label="Latte art game">
         <div id="scene" class="scene" tabindex="0" role="application" aria-label="Coffee cup. Tilt your phone to aim and hold the cup to pour."></div>
-        <div class="hud"><div class="order-card"><span id="client-avatar" class="client-avatar" aria-hidden="true"></span><div class="order-copy"><span id="client-name">Mina</span><strong>wants <span id="order-name">Heart</span></strong></div><canvas id="target-preview" width="128" height="128" aria-label="Client's finished latte example"></canvas></div><div class="hud-right"><button id="recenter" hidden>Recenter</button><div id="timer" role="timer" aria-label="Seconds remaining">30</div></div></div>
+        <div class="hud"><div class="order-card"><span id="client-avatar" class="client-avatar" aria-hidden="true"></span><canvas id="target-preview" width="128" height="128" aria-label="Client's finished latte example"></canvas></div><div class="hud-right"><button id="recenter" hidden>Recenter</button><div id="timer" role="timer" aria-label="Seconds remaining">30</div></div></div>
         <div id="play-hint" class="play-hint" hidden><span>HOLD TO POUR</span><button id="finish">Serve</button></div>
       </section>
       <section id="ready-panel" class="panel" aria-label="How to play">
@@ -26,12 +26,12 @@
         <button id="start" class="primary" disabled>Start pouring</button>
       </section>
       <section id="result-panel" class="panel result" aria-labelledby="result-title" hidden>
-        <div class="result-heading"><h1 id="result-title">Served to <span id="result-client">Mina</span></h1><p><strong id="score">0</strong>% match</p></div>
+        <div class="result-heading"><h1 id="result-title">Your serve</h1><p><strong id="score">0</strong>% match</p></div>
         <div class="compare"><figure><canvas id="your-preview" width="128" height="128" aria-label="Your finished latte"></canvas><figcaption>Your latte</figcaption></figure><figure><canvas id="order-preview" width="128" height="128" aria-label="Client's requested latte"></canvas><figcaption>Client order</figcaption></figure></div>
         <button id="again" class="primary">Try again</button>
       </section>
     </main>
   </div>
-  <script type="module" src="app.js?v=orders5"></script>
+  <script type="module" src="app.js?v=orders6"></script>
 </body>
 </html>
