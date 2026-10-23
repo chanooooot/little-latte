@@ -1,4 +1,4 @@
-:root{color-scheme:light;--ink:#33483e;--muted:#708077;--cream:#f8f5ec;--sage:#e7eee3;--line:#d9dfd3}
+:root{color-scheme:light;--ink:#33483e;--muted:#52675a;--cream:#f8f5ec;--sage:#e7eee3;--line:#d9dfd3}
 *{box-sizing:border-box}
 html,body{min-height:100%;margin:0}
 body{background:var(--cream);color:var(--ink);font:16px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-tap-highlight-color:transparent}
@@ -15,9 +15,9 @@ main{width:min(100%,720px);margin:0 auto;display:flex;flex-direction:column}
 .hud{position:absolute;z-index:2;top:20px;left:20px;right:20px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;pointer-events:none}
 .order-card{display:flex;flex-direction:column;align-items:center;gap:0}.order-card canvas{width:104px;height:104px;flex:none}.order-label{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:650}.client-avatar{position:relative;width:30px;height:30px;flex:none;overflow:hidden;border-radius:50%;background:var(--avatar,#d89b85)}.client-avatar:before{content:"";position:absolute;top:5px;left:10px;width:11px;height:12px;border-radius:48% 48% 42% 42%;background:#f3c8a8}.client-avatar:after{content:"";position:absolute;bottom:-8px;left:4px;width:22px;height:18px;border-radius:50% 50% 0 0;background:#fff8e7}
 main:has(#result-panel:not([hidden])) .order-card{visibility:hidden}
-.hud-right{display:flex;align-items:center;gap:10px}.hud-right button{pointer-events:auto;border:1px solid #cfdbcf;background:#fffdf5e8;color:var(--ink);border-radius:99px;min-height:42px;padding:0 14px;font-size:12px}
+.hud-right{display:flex;align-items:center;gap:10px}.hud-right button{pointer-events:auto;border:1px solid #cfdbcf;background:#fffdf5e8;color:var(--ink);border-radius:99px;min-height:48px;padding:0 14px;font-size:14px}
 #timer{display:grid;place-items:center;width:52px;height:52px;border-radius:50%;background:#fffdf5e8;border:1px solid #fff9;font-size:21px;font-weight:700;font-variant-numeric:tabular-nums}
-.play-hint{position:absolute;z-index:2;bottom:20px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:10px;padding:5px 5px 5px 15px;border-radius:99px;background:#fffdf5d9;color:var(--muted);font-size:10px;font-weight:700;letter-spacing:1.3px;white-space:nowrap;pointer-events:none;transition:background 150ms ease,color 150ms ease}.play-hint button{pointer-events:auto;border:0;border-radius:99px;min-height:34px;padding:0 13px;background:#456b58;color:#fff;font:inherit;letter-spacing:.4px}
+.play-hint{position:absolute;z-index:2;bottom:max(16px,env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:16px;padding:6px 6px 6px 18px;border-radius:99px;background:#fffdf5ed;color:var(--muted);font-size:12px;font-weight:700;letter-spacing:.6px;white-space:nowrap;pointer-events:none;transition:background 150ms ease,color 150ms ease}.play-hint button{pointer-events:auto;border:0;border-radius:99px;min-height:48px;min-width:88px;padding:0 20px;background:#456b58;color:#fff;font:inherit;font-size:16px;letter-spacing:0}
 .play-hint.pouring{background:#476b58;color:white}
 .panel{width:min(100%,420px);align-self:center;background:var(--sage);border-radius:24px;padding:20px 24px max(24px,env(safe-area-inset-bottom,0px));margin:16px 0 24px}
 .instruction{display:flex;align-items:center;justify-content:center;gap:20px;min-height:72px;margin-bottom:14px}
@@ -38,4 +38,19 @@ main:has(#result-panel:not([hidden])) .order-card{visibility:hidden}
 @media(min-width:601px){main{padding-top:24px}.stage{border:1px solid var(--line);border-radius:24px}.topbar{padding-inline:32px}}
 @media(max-width:600px){.topbar{height:calc(56px + env(safe-area-inset-top,0px))}.brand{font-size:22px}.hud{top:15px;left:15px;right:15px}.order-card canvas{width:88px;height:88px}.client-avatar{width:28px;height:28px}.client-avatar:before{top:5px;left:9px;width:10px;height:11px}.client-avatar:after{left:4px;width:20px;height:17px}.panel{width:calc(100% - 32px);padding-inline:20px}.result .primary{font-size:15px}}
 @media(max-height:700px){.panel{padding-top:14px}.instruction{min-height:60px;margin-bottom:9px}}
+@media(max-width:600px),(pointer:coarse){
+  .app{height:100svh;height:100dvh}.topbar{flex:none;height:calc(48px + env(safe-area-inset-top,0px));padding-inline:max(16px,env(safe-area-inset-left,0px)) max(16px,env(safe-area-inset-right,0px))}.brand{font-size:22px}
+  main{flex:1;min-height:0;width:100%;padding:0}.stage{flex:1;min-height:180px;height:auto;border:0;border-radius:0}
+  .hud{top:12px;left:max(12px,env(safe-area-inset-left,0px));right:max(12px,env(safe-area-inset-right,0px));gap:8px}.hud-right{gap:8px}.order-card canvas{width:96px;height:96px}.order-label{font-size:12px}
+  .panel{flex:none;width:calc(100% - 24px);max-width:420px;border-radius:16px;margin:12px 0 max(12px,env(safe-area-inset-bottom,0px));padding:16px}.instruction{min-height:56px;margin-bottom:12px;gap:16px}.instruction p{font-size:16px}.demo{height:56px}
+  .result{gap:10px}.compare canvas{width:min(100%,112px)}.result .primary{font-size:17px}
+}
+@media(orientation:landscape) and (max-height:500px){
+  .app{height:100svh;height:100dvh}.topbar{height:calc(40px + env(safe-area-inset-top,0px));flex:none}.brand{font-size:20px}
+  main{flex:1;min-height:0;width:100%;display:grid;grid-template-columns:minmax(0,1fr) minmax(220px,32%);gap:12px;padding:8px max(12px,env(safe-area-inset-right,0px)) max(8px,env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px))}
+  .stage{height:100%;min-height:180px;border-radius:16px}.panel{width:100%;margin:0;padding:12px;align-self:center;border-radius:16px}.instruction{min-height:48px;margin-bottom:8px;gap:12px}.demo{width:48px;height:52px}.instruction strong{font-size:20px}
+  .hud{top:8px;left:8px;right:8px}.order-card canvas{width:64px;height:64px}.order-label{font-size:11px}.client-avatar{display:none}#timer{width:44px;height:44px;font-size:18px}.hud-right button{min-height:44px;padding-inline:10px;font-size:12px}
+  .result{gap:8px}.compare canvas{width:80px}.result p strong{font-size:28px}.primary{min-height:48px}
+  main:has(#ready-panel[hidden]):has(#result-panel[hidden]) .stage{grid-column:1/-1}
+}
 @media(prefers-reduced-motion:reduce){.demo-phone,.demo-aim{animation:none}.primary{transition:none}}
