@@ -57,13 +57,6 @@ export async function createScene(host) {
   const cream = material(0xfbf3e1, .3);
   const floor = mesh(new THREE.PlaneGeometry(200, 200), new THREE.ShadowMaterial({ color: 0x665344, opacity: .16 }));
   floor.rotation.x = -Math.PI / 2; floor.position.y = -.03; floor.castShadow = false;
-  const saucer = mesh(new THREE.CylinderGeometry(2.03, 1.93, .10, 96), cream);
-  saucer.position.y = .06;
-  const saucerRim = mesh(new THREE.TorusGeometry(1.92, .09, 12, 96), cream);
-  saucerRim.rotation.x = -Math.PI / 2; saucerRim.position.y = .10;
-  const saucerInner = mesh(new THREE.TorusGeometry(1.25, .018, 8, 80), material(0xe7decc));
-  saucerInner.rotation.x = -Math.PI / 2; saucerInner.position.y = .119;
-
   const points = [[.77,.16],[.86,.17],[.97,.23],[1.15,.38],[1.33,.61],[1.48,.93],[1.58,1.23],[1.59,1.28],[1.56,1.32],[1.49,1.32],[1.47,1.26],[1.38,.95],[1.24,.66],[1.05,.45],[.86,.32],[0,.32]].map(([x,y]) => new THREE.Vector2(x,y));
   mesh(new THREE.LatheGeometry(points, 96), ceramic);
   const lip = mesh(new THREE.TorusGeometry(1.535, .047, 16, 96), cream);
@@ -130,7 +123,7 @@ export async function createScene(host) {
   function resize() {
     const w = host.clientWidth, h = host.clientHeight;
     const aspect = w / h;
-    const viewHeight = Math.max(5.7, 5.1 / aspect);
+    const viewHeight = Math.max(4.9, 4.5 / aspect);
     camera.left = -viewHeight * aspect / 2; camera.right = viewHeight * aspect / 2;
     camera.top = viewHeight / 2; camera.bottom = -viewHeight / 2;
     camera.updateProjectionMatrix(); renderer.setSize(w, h);

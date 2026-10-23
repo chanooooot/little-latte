@@ -1,15 +1,33 @@
-import { SIZE, ROUND_SECONDS, targetMask, pourSegment, scoreMask, secondsLeft, inCup, tiltAim } from './game.js?v=clean1';
+import { SIZE, ROUND_SECONDS, ORDERS, targetMask, pourSegment, scoreMask, secondsLeft, inCup, tiltAim } from './game.js?v=orders1';
 import { createScene } from './scene.js';
 
 const $ = id => document.getElementById(id);
 const phone = matchMedia('(pointer: coarse)').matches;
 document.body.dataset.control = phone ? 'tilt' : 'mouse';
 if (!phone) $('scene').setAttribute('aria-label', 'Coffee cup. Move your mouse to aim and hold to pour. Arrow keys and Space also work.');
-const mask = new Float32Array(SIZE * SIZE), target = targetMask();
+const mask = new Float32Array(SIZE * SIZE);
 const keys = new Set();
 let scene, phase = 'ready', deadline = 0, previousFrame = performance.now();
 let aim = [.5, .5], tiltTarget = [.5, .5], tiltOrigin = null, tiltReading = null, tiltTimeout;
 let pointerDown = false, keyboardPour = false, pointerId = null, previous = null, dwell = 0;
+let order = ORDERS[0], target = targetMask(order.id);
+
+function showOrder() {
+  $('order-name').textContent = order.name;
+  const canvas = $('target-preview'), context = canvas.getContext('2d'), preview = context.createImageData(SIZE, SIZE);
+  for (let index = 0; index < target.length; index++) {
+    const pixel = index * 4;
+    preview.data[pixel] = 255; preview.data[pixel + 1] = 248; preview.data[pixel + 2] = 231;
+    preview.data[pixel + 3] = target[index] * 255;
+  }
+  context.fillStyle = '#704d38'; context.fillRect(0, 0, SIZE, SIZE); context.putImageData(preview, 0, 0);
+}
+
+function nextOrder() {
+  const options = ORDERS.filter(candidate => candidate.id !== order.id);
+  order = options[Math.floor(Math.random() * options.length)];
+  target = targetMask(order.id); showOrder();
+}
 
 function notice(text = '') {
   $('notice').textContent = text;
@@ -84,6 +102,7 @@ function finishRound() {
 
 function readyRound() {
   phase = 'ready'; mask.fill(0); scene.updateFoam(mask); resetInput(); aim = [.5, .5];
+  nextOrder();
   $('timer').textContent = '30'; $('result-panel').hidden = true;
   $('ready-panel').hidden = false; $('start').disabled = false; notice();
 }
@@ -125,6 +144,7 @@ $('start').addEventListener('click', startRound);
 $('again').addEventListener('click', readyRound);
 $('finish').addEventListener('click', finishRound);
 $('recenter').addEventListener('click', recenter);
+showOrder();
 
 function tick(now) {
   const dt = Math.min((now - previousFrame) / 1000, .05); previousFrame = now;

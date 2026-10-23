@@ -13,10 +13,10 @@ main{width:min(100%,900px);margin:0 auto;flex:1;display:flex;flex-direction:colu
 .stage{position:relative;flex:1;min-height:410px;overflow:hidden;background:radial-gradient(ellipse at 50% 35%,#eee9db 0%,#e4dfd0 70%,#d9d1c0 100%)}
 .scene{position:absolute;inset:0;touch-action:none;outline-offset:-3px;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}.scene canvas{display:block;width:100%;height:100%}
 .hud{position:absolute;z-index:2;top:20px;left:20px;right:20px;display:flex;align-items:center;justify-content:space-between;gap:12px;pointer-events:none}
-.challenge{background:#fffdf5d9;border:1px solid #fff9;border-radius:99px;padding:10px 14px;font-size:11px;font-weight:700;letter-spacing:1.1px;white-space:nowrap}.challenge span{color:#b67a5b;font-size:15px;margin-left:5px}
-.hud-right{display:flex;align-items:center;gap:10px}.hud-right button{pointer-events:auto;border:1px solid #cfdbcf;background:#fffdf5e8;color:var(--ink);border-radius:99px;min-height:42px;padding:0 14px;font-size:12px}#finish{border-color:#456b58;background:#456b58;color:#fff}
+.order-card{display:flex;align-items:center;gap:9px;min-height:58px;padding:5px 12px 5px 5px;border:1px solid #fff9;border-radius:99px;background:#fffdf5d9}.order-card canvas{width:48px;height:48px;border-radius:50%;border:1px solid #d2c4ae}.order-copy{display:grid;gap:1px;line-height:1}.order-copy span{font-size:9px;font-weight:700;letter-spacing:1.1px;color:var(--muted)}.order-copy strong{font-size:14px}
+.hud-right{display:flex;align-items:center;gap:10px}.hud-right button{pointer-events:auto;border:1px solid #cfdbcf;background:#fffdf5e8;color:var(--ink);border-radius:99px;min-height:42px;padding:0 14px;font-size:12px}
 #timer{display:grid;place-items:center;width:52px;height:52px;border-radius:50%;background:#fffdf5e8;border:1px solid #fff9;font-size:21px;font-weight:700;font-variant-numeric:tabular-nums}
-.play-hint{position:absolute;z-index:2;bottom:20px;left:50%;transform:translateX(-50%);padding:9px 15px;border-radius:99px;background:#fffdf5d9;color:var(--muted);font-size:10px;font-weight:700;letter-spacing:1.3px;white-space:nowrap;pointer-events:none;transition:background 150ms ease,color 150ms ease}
+.play-hint{position:absolute;z-index:2;bottom:20px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:10px;padding:5px 5px 5px 15px;border-radius:99px;background:#fffdf5d9;color:var(--muted);font-size:10px;font-weight:700;letter-spacing:1.3px;white-space:nowrap;pointer-events:none;transition:background 150ms ease,color 150ms ease}.play-hint button{pointer-events:auto;border:0;border-radius:99px;min-height:34px;padding:0 13px;background:#456b58;color:#fff;font:inherit;letter-spacing:.4px}
 .play-hint.pouring{background:#476b58;color:white}
 .panel{background:var(--sage);border-radius:26px 26px 0 0;padding:20px 24px max(24px,env(safe-area-inset-bottom,0px));box-shadow:0 -4px 28px #5b604514}
 .instruction{display:flex;align-items:center;justify-content:center;gap:20px;min-height:72px;margin-bottom:14px}
@@ -35,6 +35,6 @@ main{width:min(100%,900px);margin:0 auto;flex:1;display:flex;flex-direction:colu
 @media(pointer:fine){.phone-only,.demo{display:none}.instruction{min-height:55px}.instruction p{text-align:center}}
 @media(pointer:coarse){.mouse-only{display:none}}
 @media(min-width:901px){.stage{border-inline:1px solid var(--line)}.panel{border-radius:26px;margin-bottom:24px}.topbar{padding-inline:32px}}
-@media(max-width:600px){.topbar{height:calc(56px + env(safe-area-inset-top,0px))}.brand{font-size:22px}.stage{min-height:350px}.hud{top:15px;left:15px;right:15px}.challenge{font-size:10px;padding:9px 11px}.panel{padding-inline:20px}.result .primary{font-size:15px}}
+@media(max-width:600px){.topbar{height:calc(56px + env(safe-area-inset-top,0px))}.brand{font-size:22px}.stage{min-height:350px}.hud{top:15px;left:15px;right:15px}.order-card{padding:4px;min-height:54px}.order-card canvas{width:44px;height:44px}.order-copy{display:none}.panel{padding-inline:20px}.result .primary{font-size:15px}}
 @media(max-height:700px){.stage{min-height:300px}.panel{padding-top:14px}.instruction{min-height:60px;margin-bottom:9px}}
 @media(prefers-reduced-motion:reduce){.demo-phone,.demo-aim{animation:none}.primary{transition:none}}

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { SIZE, targetMask, scoreMask, pourSegment, secondsLeft, inCup, tiltAim } from '../dist/game.js';
+import { SIZE, ORDERS, targetMask, scoreMask, pourSegment, secondsLeft, inCup, tiltAim } from '../dist/game.js';
 
 test('tilt centers, follows screen rotation, ignores tiny motion, and clamps edges', () => {
   assert.deepEqual(tiltAim(20, 10, [20, 10]), [.5, .5]);
@@ -18,6 +18,14 @@ test('heart rewards its shape, not an empty or flooded cup', () => {
   assert.equal(scoreMask(target, target), 100);
   assert.equal(scoreMask(empty, target), 0);
   assert.ok(scoreMask(flooded, target) < 60);
+});
+
+test('every order has a distinct, scoreable target', () => {
+  const targets = ORDERS.map(order => targetMask(order.id));
+  assert.equal(targets.length, 3);
+  for (const target of targets) assert.equal(scoreMask(target, target), 100);
+  assert.notDeepEqual(targets[0], targets[1]);
+  assert.notDeepEqual(targets[1], targets[2]);
 });
 
 test('pouring interpolates fast movement, clips foam to cup, and stays bounded', () => {

@@ -1,5 +1,10 @@
 export const SIZE = 128;
 export const ROUND_SECONDS = 30;
+export const ORDERS = [
+  { id: 'heart', name: 'Heart' },
+  { id: 'tulip', name: 'Tulip' },
+  { id: 'leaf', name: 'Leaf' },
+];
 
 export function secondsLeft(deadline, now) {
   return Math.max(0, Math.min(ROUND_SECONDS, (deadline - now) / 1000));
@@ -19,13 +24,20 @@ export function tiltAim(beta, gamma, origin, angle = 0) {
   return [position(x), position(y)];
 }
 
-export function targetMask() {
+export function targetMask(order = 'heart') {
   const mask = new Float32Array(SIZE * SIZE);
   for (let j = 0; j < SIZE; j++) {
     for (let i = 0; i < SIZE; i++) {
       const x = (i + 0.5) / SIZE, y = (j + 0.5) / SIZE;
-      const u = (x - 0.5) / 0.245, v = (0.49 - y) / 0.245;
-      mask[j * SIZE + i] = (u * u + v * v - 1) ** 3 - u * u * v ** 3 <= 0 && inCup(x, y) ? 1 : 0;
+      const heart = () => {
+        const u = (x - 0.5) / .245, v = (.49 - y) / .245;
+        return (u * u + v * v - 1) ** 3 - u * u * v ** 3 <= 0;
+      };
+      const ellipse = (cx, cy, rx, ry) => ((x - cx) / rx) ** 2 + ((y - cy) / ry) ** 2 <= 1;
+      const tulip = () => ellipse(.43, .44, .1, .11) || ellipse(.57, .44, .1, .11) || ellipse(.5, .53, .13, .1) || (Math.abs(x - .5) < .022 && y > .57 && y < .73);
+      const leaf = () => ellipse(.43, .42, .08, .13) || ellipse(.57, .42, .08, .13) || ellipse(.45, .53, .09, .14) || ellipse(.55, .53, .09, .14) || ellipse(.5, .63, .06, .14);
+      const shape = order === 'tulip' ? tulip() : order === 'leaf' ? leaf() : heart();
+      mask[j * SIZE + i] = shape && inCup(x, y) ? 1 : 0;
     }
   }
   return mask;

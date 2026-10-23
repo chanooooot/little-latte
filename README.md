@@ -1,10 +1,10 @@
 # Little Latte
 
-A one-round latte art game. Make a heart in 30 seconds.
+A one-round latte art game. Make the customer's heart, tulip, or leaf in 30 seconds.
 
 ## Play
 
-On a phone, tap **Start pouring** and allow motion access. The phone's current angle becomes the center. Tilt to aim, and hold the cup to pour. Tap **Finish** whenever you are done, or let the round end automatically. Tap **Recenter** if your grip changes.
+The order card shows the milk-art result to copy. On a phone, tap **Start pouring** and allow motion access. The phone's current angle becomes the center. Tilt to aim, and hold the cup to pour. Tap **Finish** whenever you are done, or let the round end automatically. Tap **Recenter** if your grip changes. The next round uses a different order.
 
 On a computer, move the mouse to aim and hold the cup to pour. Arrow keys and Space also work.
 
