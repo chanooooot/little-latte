@@ -45,6 +45,7 @@ main:has(#result-panel:not([hidden])) .order-card{visibility:hidden}
   .panel{flex:none;width:calc(100% - 24px);max-width:420px;border-radius:16px;margin:12px 0 max(12px,env(safe-area-inset-bottom,0px));padding:16px}.instruction{min-height:56px;margin-bottom:12px;gap:16px}.instruction p{font-size:16px}.demo{height:56px}
   .result{gap:10px}.compare canvas{width:min(100%,112px)}.result .primary{font-size:17px}
 }
+@media(max-width:600px) and (max-height:600px){.stage{min-height:120px}.compare canvas{width:min(100%,96px)}}
 @media(orientation:landscape) and (max-height:500px){
   .app{height:100svh;height:100dvh}.topbar{height:calc(40px + env(safe-area-inset-top,0px));flex:none}.brand{font-size:20px}
   main{flex:1;min-height:0;width:100%;display:grid;grid-template-columns:minmax(0,1fr) minmax(220px,32%);gap:12px;padding:8px max(12px,env(safe-area-inset-right,0px)) max(8px,env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px))}
