@@ -1,5 +1,5 @@
 import { SIZE, ROUND_SECONDS, ORDERS, targetMask, pourSegment, scoreMask, secondsLeft, inCup, tiltAim } from './game.js?v=quality1';
-import { createScene } from './scene.js?v=local-three1';
+import { createScene } from './scene.js?v=local-three2';
 
 const $ = id => document.getElementById(id);
 const phone = matchMedia('(pointer: coarse)').matches;
@@ -194,7 +194,7 @@ function tick(now) {
     scene.updateFoam(mask); previous = [...aim];
   } else { previous = null; dwell = 0; }
   $('play-hint').classList.toggle('pouring', pouring);
-  scene.render(aim, pouring, phase === 'playing' && inCup(...aim));
+  scene.render(aim, pouring, phase === 'playing' && inCup(...aim), dt);
   requestAnimationFrame(tick);
 }
 

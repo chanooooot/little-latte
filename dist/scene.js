@@ -96,6 +96,8 @@ export async function createScene(host) {
   updateFoam(new Float32Array(SIZE * SIZE));
 
   const pitcher = new THREE.Group(); scene.add(pitcher);
+  const motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
+  let pourPose = 0;
   const steel = material(0xd6dedb, .22, .78);
   const jugProfile = [[0,0],[.27,0],[.31,.04],[.36,.63],[.37,.72],[.34,.73],[.33,.66],[.28,.08],[0,.08]].map(([x,y])=>new THREE.Vector2(x,y));
   mesh(new THREE.LatheGeometry(jugProfile, 48), steel, pitcher);
@@ -138,10 +140,13 @@ export async function createScene(host) {
       if (!raycaster.ray.intersectPlane(plane, intersection)) return null;
       return [intersection.x / 2.95 + .5, intersection.z / 2.95 + .5];
     },
-    render(point, pouring, active) {
+    render(point, pouring, active, dt) {
       const x = (point[0] - .5) * 2.95, z = (point[1] - .5) * 2.95;
-      const hoverHeight = pouring ? .75 : 1.03;
-      pitcher.rotation.z = pouring ? .65 : -.12;
+      const targetPose = pouring ? 1 : 0;
+      const poseRate = pouring ? 24 : 34;
+      pourPose += (targetPose - pourPose) * (motionPreference.matches ? 1 : 1 - Math.exp(-dt * poseRate));
+      const hoverHeight = 1.03 - .28 * pourPose;
+      pitcher.rotation.z = -.12 + .77 * pourPose;
       start.set(x, 1.255 + hoverHeight, z);
       const localTip = tip.clone().applyQuaternion(pitcher.quaternion);
       pitcher.position.copy(start).sub(localTip);
