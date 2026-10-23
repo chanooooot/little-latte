@@ -37,7 +37,7 @@ function recenter() {
 function beginRound() {
   phase = 'playing'; deadline = performance.now() + ROUND_SECONDS * 1000;
   $('ready-panel').hidden = true; $('result-panel').hidden = true;
-  $('play-hint').hidden = false; $('recenter').hidden = !phone;
+  $('play-hint').hidden = false; $('finish').hidden = false; $('recenter').hidden = !phone;
   $('timer').textContent = '30'; notice();
   $('scene').focus({ preventScroll: true });
 }
@@ -77,7 +77,7 @@ async function startRound() {
 function finishRound() {
   if (phase !== 'playing') return;
   phase = 'result'; resetInput(); stopTilt();
-  $('play-hint').hidden = true; $('recenter').hidden = true;
+  $('play-hint').hidden = true; $('finish').hidden = true; $('recenter').hidden = true;
   $('score').textContent = scoreMask(mask, target);
   $('result-panel').hidden = false; $('again').focus({ preventScroll: true });
 }
@@ -123,6 +123,7 @@ document.addEventListener('visibilitychange', () => {
 });
 $('start').addEventListener('click', startRound);
 $('again').addEventListener('click', readyRound);
+$('finish').addEventListener('click', finishRound);
 $('recenter').addEventListener('click', recenter);
 
 function tick(now) {

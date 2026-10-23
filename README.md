@@ -4,7 +4,7 @@ A one-round latte art game. Make a heart in 30 seconds.
 
 ## Play
 
-On a phone, tap **Start pouring** and allow motion access. The phone's current angle becomes the center. Tilt to aim, and hold the cup to pour. Tap **Recenter** if your grip changes. The round ends automatically.
+On a phone, tap **Start pouring** and allow motion access. The phone's current angle becomes the center. Tilt to aim, and hold the cup to pour. Tap **Finish** whenever you are done, or let the round end automatically. Tap **Recenter** if your grip changes.
 
 On a computer, move the mouse to aim and hold the cup to pour. Arrow keys and Space also work.
 
