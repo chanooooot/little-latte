@@ -54,4 +54,9 @@ main:has(#result-panel:not([hidden])) .hud{display:none}
   .result{gap:8px}.compare canvas{width:80px}.result p strong{font-size:28px}.primary{min-height:48px}
   main:has(#ready-panel[hidden]):has(#result-panel[hidden]) .stage{grid-column:1/-1}
 }
+@media(orientation:landscape) and (max-height:340px){
+  .topbar{height:calc(28px + env(safe-area-inset-top,0px))}.hud{padding:0}.order-card canvas{width:64px;height:64px}.order-label strong{font-size:15px}
+  .stage{min-height:64px}.panel{padding:8px}.instruction{min-height:40px;margin-bottom:4px;gap:8px}.instruction strong{font-size:17px}.demo{display:none}
+  .play-hint button{min-height:48px;padding-inline:12px;font-size:15px}
+}
 @media(prefers-reduced-motion:reduce){.demo-phone,.demo-aim{animation:none}.primary{transition:none}}

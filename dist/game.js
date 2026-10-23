@@ -52,7 +52,7 @@ export function pourSegment(mask, from, to, radius, dt) {
   if (radius <= 0 || dt <= 0) return;
   const distance = Math.hypot(to[0] - from[0], to[1] - from[1]);
   const steps = Math.min(256, Math.max(1, Math.ceil(distance / (radius * 0.4))));
-  const opacity = 1 - Math.exp(-18 * Math.min(dt, 0.1));
+  const opacity = 1 - Math.exp(-18 * dt);
   for (let step = 1; step <= steps; step++) {
     const t = step / steps;
     const cx = from[0] + (to[0] - from[0]) * t;

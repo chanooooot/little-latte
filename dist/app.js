@@ -1,4 +1,4 @@
-import { SIZE, ROUND_SECONDS, ORDERS, targetMask, pourSegment, scoreMask, secondsLeft, inCup, tiltAim } from './game.js?v=orders6';
+import { SIZE, ROUND_SECONDS, ORDERS, targetMask, pourSegment, scoreMask, secondsLeft, inCup, tiltAim } from './game.js?v=quality1';
 import { createScene } from './scene.js?v=local-three1';
 
 const $ = id => document.getElementById(id);
@@ -34,9 +34,8 @@ function drawArt(canvas, art) {
   const preview = surface.getContext('2d').createImageData(SIZE, SIZE);
   for (let index = 0; index < art.length; index++) {
     const pixel = index * 4;
-    const milk = art[index] > 0;
     preview.data[pixel] = 255; preview.data[pixel + 1] = 248; preview.data[pixel + 2] = 231;
-    preview.data[pixel + 3] = milk ? 255 : 0;
+    preview.data[pixel + 3] = Math.round(Math.max(0, Math.min(1, art[index])) * 255);
   }
   surface.getContext('2d').putImageData(preview, 0, 0);
   context.drawImage(surface, center - radius, center - radius, radius * 2, radius * 2); context.restore();
