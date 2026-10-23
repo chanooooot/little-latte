@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#f8f5ec">
   <meta name="description" content="Make a little latte art in 30 seconds.">
   <title>Little Latte</title>
-  <link rel="stylesheet" href="style.css?v=orders4">
+  <link rel="stylesheet" href="style.css?v=orders5">
 </head>
 <body>
   <div class="app">
@@ -14,7 +14,7 @@
     <main>
       <section class="stage" aria-label="Latte art game">
         <div id="scene" class="scene" tabindex="0" role="application" aria-label="Coffee cup. Tilt your phone to aim and hold the cup to pour."></div>
-        <div class="hud"><div class="order-card"><span id="client-avatar" class="client-avatar" aria-hidden="true"></span><canvas id="target-preview" width="128" height="128" aria-label="Client's finished latte example"></canvas></div><div class="hud-right"><button id="recenter" hidden>Recenter</button><div id="timer" role="timer" aria-label="Seconds remaining">30</div></div></div>
+        <div class="hud"><div class="order-card"><canvas id="target-preview" width="128" height="128" aria-label="Client's finished latte example"></canvas><span id="client-avatar" class="client-avatar" aria-hidden="true"></span></div><div class="hud-right"><button id="recenter" hidden>Recenter</button><div id="timer" role="timer" aria-label="Seconds remaining">30</div></div></div>
         <div id="play-hint" class="play-hint" hidden><span>HOLD TO POUR</span><button id="finish">Serve</button></div>
       </section>
       <section id="ready-panel" class="panel" aria-label="How to play">
