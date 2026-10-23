@@ -7,7 +7,7 @@
   <meta name="description" content="A little pour, a little magic. Make latte art in a cozy 30-second coffee game.">
   <title>Little Latte — The daily pour</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23b5cbb5'/%3E%3Cpath d='M14 22h32v17a14 14 0 0 1-28 0V22m28 3h5a7 7 0 0 1 0 14h-5' fill='none' stroke='%233d3028' stroke-width='4'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=tilt1">
 </head>
 <body>
   <svg class="icon-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -67,6 +67,6 @@
   <dialog id="help-dialog" aria-labelledby="help-title"><button class="close-button icon-button" aria-label="Close instructions" data-close="help-dialog"><svg><use href="#close"/></svg></button><p class="eyebrow">A QUICK COFFEE LESSON</p><h2 id="help-title">Find your flow.</h2><ol class="help-steps"><li><span>01</span><div><strong>Pick your inspiration.</strong><p>Choose a heart, tulip, or rosetta. Your reference stays beside the cup.</p></div></li><li><span>02</span><div><strong>Make your pour.</strong><p>Press Start pouring. Move over the coffee, then hold your mouse or finger to add milk. Release to stop. On a phone, choose Use phone tilt to aim by tilting; hold the cup to pour and tap Recenter tilt when needed.</p></div></li><li><span>03</span><div><strong>Add the little details.</strong><p>Use full flow for soft shapes, fine flow for stems. Staying still makes a bigger pool of foam.</p></div></li><li><span>04</span><div><strong>Serve with love.</strong><p>Serve early or use all 30 seconds. Your score measures how closely the foam matches the reference.</p></div></li></ol><p class="keyboard-note"><strong>Keyboard baristas:</strong> focus the cup, use arrow keys to aim, hold Space to pour. Press F to switch fine/full flow. Fresh canvas clears art, but keeps the clock running.</p><button class="primary-button" data-close="help-dialog">Got it. Let’s pour.<svg><use href="#arrow"/></svg></button></dialog>
 
   <dialog id="result-dialog" aria-labelledby="result-title"><p class="eyebrow">FRESHLY POURED, JUST BY YOU</p><h2 id="result-title">Made with heart.</h2><p id="result-message">A lovely little start. Every cup is practice.</p><div class="result-art"><div><canvas id="result-target" width="220" height="220" role="img" aria-label="Reference pattern"></canvas><span>THE INSPIRATION</span></div><div><canvas id="result-pour" width="220" height="220" role="img" aria-label="Your finished latte art"></canvas><span>YOUR LITTLE MASTERPIECE</span></div></div><div class="score-line"><span><strong id="score">0</strong><span class="score-percent">%</span></span><div><strong>Shape match</strong><p id="score-comment">A fresh cup is another chance.</p></div></div><div class="result-actions"><button id="retry-button" class="secondary-button"><svg><use href="#reset"/></svg>Try again</button><button id="next-button" class="primary-button">Next pour<svg><use href="#arrow"/></svg></button></div></dialog>
-  <script type="module" src="app.js"></script>
+  <script type="module" src="app.js?v=tilt1"></script>
 </body>
 </html>

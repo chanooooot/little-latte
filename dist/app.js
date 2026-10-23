@@ -1,4 +1,4 @@
-import { SIZE, ORDERS, ROUND_SECONDS, targetMask, pourSegment, scoreMask, secondsLeft, inCup, tiltAim } from './game.js';
+import { SIZE, ORDERS, ROUND_SECONDS, targetMask, pourSegment, scoreMask, secondsLeft, inCup, tiltAim } from './game.js?v=tilt1';
 import { createScene } from './scene.js';
 
 const $ = id => document.getElementById(id);
@@ -221,9 +221,11 @@ $('sound-button').addEventListener('click', () => {
   $('sound-button').setAttribute('aria-pressed', String(soundEnabled));
   $('sound-button').setAttribute('aria-label', soundEnabled ? 'Turn sound off' : 'Turn sound on');
 });
-$('tilt-button').addEventListener('click', toggleTilt);
-$('recenter-button').addEventListener('click', recenterTilt);
-if (window.isSecureContext && 'DeviceOrientationEvent' in window && matchMedia('(pointer: coarse)').matches) $('tilt-controls').hidden = false;
+if ($('tilt-button')) {
+  $('tilt-button').addEventListener('click', toggleTilt);
+  $('recenter-button').addEventListener('click', recenterTilt);
+  if (window.isSecureContext && 'DeviceOrientationEvent' in window && matchMedia('(pointer: coarse)').matches) $('tilt-controls').hidden = false;
+}
 
 function tick(now) {
   const dt = Math.min((now - previousFrame) / 1000, .05); previousFrame = now;
