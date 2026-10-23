@@ -4,9 +4,9 @@ A one-round latte art game. Make the customer's heart, tulip, or leaf in 30 seco
 
 ## Play
 
-Each round has a client, their order, and a milk-art example to copy. On a phone, tap **Start pouring** and allow motion access. The phone's current angle becomes the center. Tilt to aim, and hold the cup to pour. Tap **Serve** whenever you are done, or let the round end automatically. Tap **Recenter** if your grip changes. The next round uses a different client and order.
+Each round shows a named latte order and a large milk-art example to copy. On a phone, tap **Start pouring** and allow motion access. The phone's current angle becomes the center. Tilt to aim, and hold the **Hold to pour** button to pour. Tap **Serve** whenever you are done, or let the round end automatically. Tap **Recenter** if your grip changes. The next round uses a different latte shape.
 
-On a computer, move the mouse to aim and hold the cup to pour. Arrow keys and Space also work.
+On a computer, move the mouse to aim and hold the **Hold to pour** button to pour. Arrow keys and Space also work.
 
 ## Run
 

@@ -6,32 +6,32 @@
   <meta name="theme-color" content="#f8f5ec">
   <meta name="description" content="Make a little latte art in 30 seconds.">
   <title>Little Latte</title>
-  <link rel="stylesheet" href="style.css?v=phone3">
+  <link rel="stylesheet" href="style.css?v=controls1">
 </head>
 <body>
   <div class="app">
     <header class="topbar"><span class="brand">little latte<span>.</span></span></header>
     <main>
+      <div class="hud"><div class="order-card"><canvas id="target-preview" width="256" height="256" aria-label="Requested latte example"></canvas><div class="order-label"><span>Your order</span><strong id="order-name">Heart Latte</strong></div></div><div class="hud-right"><div id="timer" role="timer" aria-label="Seconds remaining">30</div><button id="recenter" hidden>Recenter</button></div></div>
       <section class="stage" aria-label="Latte art game">
-        <div id="scene" class="scene" tabindex="0" role="application" aria-label="Coffee cup. Tilt your phone to aim and hold the cup to pour."></div>
-        <div class="hud"><div class="order-card"><canvas id="target-preview" width="128" height="128" aria-label="Client's finished latte example"></canvas><div class="order-label"><span id="client-avatar" class="client-avatar" aria-hidden="true"></span><span>Your order</span></div></div><div class="hud-right"><button id="recenter" hidden>Recenter</button><div id="timer" role="timer" aria-label="Seconds remaining">30</div></div></div>
-        <div id="play-hint" class="play-hint" hidden><span>HOLD TO POUR</span><button id="finish">Serve</button></div>
+        <div id="scene" class="scene" tabindex="0" role="application" aria-label="Coffee cup. Tilt your phone to aim. Hold the Pour button to pour."></div>
       </section>
+      <div id="play-hint" class="play-hint" hidden><button id="pour" aria-label="Hold to pour">Hold to pour</button><button id="finish">Serve</button></div>
       <section id="ready-panel" class="panel" aria-label="How to play">
         <div class="instruction">
           <div class="demo" aria-hidden="true"><span class="demo-phone"><span class="demo-dot"></span></span><span class="demo-aim"></span></div>
-          <p id="instruction-text"><span class="phone-only">Tilt to aim</span><span class="mouse-only">Move to aim</span><strong>Hold to pour</strong></p>
+          <p id="instruction-text"><span class="phone-only">Tilt to aim</span><span class="mouse-only">Move to aim</span><strong>Hold the Pour button</strong></p>
         </div>
         <p id="notice" role="status" hidden></p>
         <button id="start" class="primary" disabled>Loading cup…</button>
       </section>
       <section id="result-panel" class="panel result" aria-labelledby="result-title" hidden>
         <div class="result-heading"><h1 id="result-title">Your serve</h1><p><strong id="score">0</strong>% match</p></div>
-        <div class="compare"><figure><canvas id="your-preview" width="128" height="128" aria-label="Your finished latte"></canvas><figcaption>Your latte</figcaption></figure><figure><canvas id="order-preview" width="128" height="128" aria-label="Client's requested latte"></canvas><figcaption>Client order</figcaption></figure></div>
+        <div class="compare"><figure><canvas id="your-preview" width="128" height="128" aria-label="Your finished latte"></canvas><figcaption>Your latte</figcaption></figure><figure><canvas id="order-preview" width="128" height="128" aria-label="Requested latte"></canvas><figcaption id="order-caption">Heart Latte</figcaption></figure></div>
         <button id="again" class="primary">Try again</button>
       </section>
     </main>
   </div>
-  <script type="module" src="app.js?v=local-three1"></script>
+  <script type="module" src="app.js?v=controls1"></script>
 </body>
 </html>

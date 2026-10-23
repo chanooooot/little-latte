@@ -6,7 +6,7 @@ Little Latte is a static, one-round mobile-first latte-art game. It is published
 
 <https://chanooooot.github.io/little-latte/dist/>
 
-Players receive a random Heart, Tulip, or Leaf order. The active reference is a large ceramic latte at the top-left of the game, with a small customer avatar beneath it. Customer names are deliberately not shown. Players tilt a phone to aim, hold the cup area to pour, and tap **Serve** to finish early. Desktop keeps mouse and keyboard controls.
+Players receive a random Heart, Tulip, or Leaf order. The active reference is a large ceramic latte above the game, labeled Heart Latte, Tulip Latte, or Leaf Latte. No customer avatar is shown. Players tilt a phone to aim, hold the dedicated **Hold to pour** button, and tap the separate **Serve** button to finish early. Desktop keeps mouse and keyboard controls.
 
 The result panel shows the poured latte beside the requested latte and reports a shape-match score.
 

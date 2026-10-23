@@ -4,7 +4,7 @@ import { createScene } from './scene.js?v=local-three1';
 const $ = id => document.getElementById(id);
 const phone = matchMedia('(pointer: coarse)').matches;
 document.body.dataset.control = phone ? 'tilt' : 'mouse';
-if (!phone) $('scene').setAttribute('aria-label', 'Coffee cup. Move your mouse to aim and hold to pour. Arrow keys and Space also work.');
+if (!phone) $('scene').setAttribute('aria-label', 'Coffee cup. Move your mouse to aim. Hold the Pour button to pour. Arrow keys and Space also work.');
 const mask = new Float32Array(SIZE * SIZE);
 const keys = new Set();
 let scene, phase = 'ready', deadline = 0, previousFrame = performance.now();
@@ -13,8 +13,8 @@ let pointerDown = false, keyboardPour = false, pointerId = null, previous = null
 let order = ORDERS[0], target = targetMask(order.id);
 
 function showOrder() {
-  $('client-avatar').style.setProperty('--avatar', order.color);
-  $('target-preview').setAttribute('aria-label', `Client's finished ${order.name} latte example`);
+  $('order-name').textContent = $('order-caption').textContent = `${order.name} Latte`;
+  $('target-preview').setAttribute('aria-label', `${order.name} Latte example`);
   drawArt($('target-preview'), target);
 }
 
@@ -55,7 +55,7 @@ function notice(text = '') {
 
 function resetInput() {
   pointerDown = keyboardPour = false; previous = null; dwell = 0; keys.clear();
-  if (pointerId !== null && $('scene').hasPointerCapture(pointerId)) $('scene').releasePointerCapture(pointerId);
+  if (pointerId !== null && $('pour').hasPointerCapture(pointerId)) $('pour').releasePointerCapture(pointerId);
   pointerId = null;
 }
 
@@ -133,28 +133,30 @@ function moveMouse(event) {
   if (point) aim = point.map(value => Math.max(0, Math.min(1, value)));
 }
 
-$('scene').addEventListener('pointerdown', event => {
+$('pour').addEventListener('pointerdown', event => {
   if (event.button !== 0 || phase !== 'playing' || pointerId !== null) return;
   event.preventDefault(); pointerId = event.pointerId;
-  $('scene').setPointerCapture(pointerId); moveMouse(event);
+  $('pour').setPointerCapture(pointerId);
   pointerDown = true; previous = null; dwell = 0;
 });
 $('scene').addEventListener('pointermove', moveMouse);
-for (const type of ['pointerup', 'pointercancel', 'lostpointercapture']) $('scene').addEventListener(type, event => {
+for (const type of ['pointerup', 'pointercancel', 'lostpointercapture']) $('pour').addEventListener(type, event => {
   if (pointerId === event.pointerId) resetInput();
 });
-$('scene').addEventListener('keydown', event => {
-  if (phase !== 'playing') return;
-  if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', ' '].includes(event.key)) {
-    event.preventDefault(); keys.add(event.key);
-    if (event.key === ' ') keyboardPour = true;
-  }
-});
-$('scene').addEventListener('keyup', event => {
-  keys.delete(event.key);
-  if (event.key === ' ') { event.preventDefault(); keyboardPour = false; previous = null; dwell = 0; }
-});
-$('scene').addEventListener('blur', resetInput);
+for (const id of ['scene', 'pour']) {
+  $(id).addEventListener('keydown', event => {
+    if (phase !== 'playing') return;
+    if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', ' ', 'Enter'].includes(event.key)) {
+      event.preventDefault(); keys.add(event.key);
+      if (event.key === ' ' || event.key === 'Enter') keyboardPour = true;
+    }
+  });
+  $(id).addEventListener('keyup', event => {
+    keys.delete(event.key);
+    if (event.key === ' ' || event.key === 'Enter') { event.preventDefault(); keyboardPour = false; previous = null; dwell = 0; }
+  });
+  $(id).addEventListener('blur', resetInput);
+}
 window.addEventListener('blur', resetInput);
 document.addEventListener('visibilitychange', () => {
   resetInput();
