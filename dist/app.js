@@ -19,10 +19,13 @@ function showOrder() {
   const canvas = $('target-preview'), context = canvas.getContext('2d'), preview = context.createImageData(SIZE, SIZE);
   for (let index = 0; index < target.length; index++) {
     const pixel = index * 4;
-    preview.data[pixel] = 255; preview.data[pixel + 1] = 248; preview.data[pixel + 2] = 231;
-    preview.data[pixel + 3] = target[index] * 255;
+    const milk = target[index] > 0;
+    preview.data[pixel] = milk ? 255 : 112;
+    preview.data[pixel + 1] = milk ? 248 : 77;
+    preview.data[pixel + 2] = milk ? 231 : 56;
+    preview.data[pixel + 3] = 255;
   }
-  context.fillStyle = '#704d38'; context.fillRect(0, 0, SIZE, SIZE); context.putImageData(preview, 0, 0);
+  context.putImageData(preview, 0, 0);
 }
 
 function nextOrder() {
