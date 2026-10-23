@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { SIZE, ORDERS, targetMask, scoreMask, pourSegment, secondsLeft, inCup, tiltAim } from '../dist/game.js';
+import { SIZE, targetMask, scoreMask, pourSegment, secondsLeft, inCup, tiltAim } from '../dist/game.js';
 
 test('tilt centers, follows screen rotation, ignores tiny motion, and clamps edges', () => {
   assert.deepEqual(tiltAim(20, 10, [20, 10]), [.5, .5]);
@@ -10,17 +10,14 @@ test('tilt centers, follows screen rotation, ignores tiny motion, and clamps edg
   assert.deepEqual(tiltAim(20, 90, [20, 10]), [1, .5]);
 });
 
-test('each order rewards its own shape, not an empty or flooded cup', () => {
+test('heart rewards its shape, not an empty or flooded cup', () => {
   const empty = new Float32Array(SIZE * SIZE);
   const flooded = new Float32Array(SIZE * SIZE);
   for (let y = 0; y < SIZE; y++) for (let x = 0; x < SIZE; x++) flooded[y * SIZE + x] = +inCup((x + .5) / SIZE, (y + .5) / SIZE);
-  for (const { id } of ORDERS) {
-    const target = targetMask(id);
-    assert.equal(scoreMask(target, target), 100);
-    assert.equal(scoreMask(empty, target), 0);
-    assert.ok(scoreMask(flooded, target) < 60);
-    for (const other of ORDERS.filter(o => o.id !== id)) assert.ok(scoreMask(target, targetMask(other.id)) < 90);
-  }
+  const target = targetMask();
+  assert.equal(scoreMask(target, target), 100);
+  assert.equal(scoreMask(empty, target), 0);
+  assert.ok(scoreMask(flooded, target) < 60);
 });
 
 test('pouring interpolates fast movement, clips foam to cup, and stays bounded', () => {

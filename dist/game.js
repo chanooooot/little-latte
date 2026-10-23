@@ -1,10 +1,5 @@
 export const SIZE = 128;
 export const ROUND_SECONDS = 30;
-export const ORDERS = [
-  { id: 'heart', name: 'A little heart', level: 'The classic', tip: 'Build two soft lobes. Bring them together into a point.', difficulty: 1 },
-  { id: 'tulip', name: 'Three-leaf tulip', level: 'A little flourish', tip: 'Stack three pairs of petals. Finish with a thin stem.', difficulty: 2 },
-  { id: 'rosetta', name: 'The rosetta', level: 'Your signature pour', tip: 'Wiggle side to side, getting narrower as you go. Add a stem.', difficulty: 3 },
-];
 
 export function secondsLeft(deadline, now) {
   return Math.max(0, Math.min(ROUND_SECONDS, (deadline - now) / 1000));
@@ -24,37 +19,13 @@ export function tiltAim(beta, gamma, origin, angle = 0) {
   return [position(x), position(y)];
 }
 
-function ellipse(x, y, cx, cy, rx, ry, angle = 0) {
-  const dx = x - cx, dy = y - cy;
-  const u = dx * Math.cos(angle) + dy * Math.sin(angle);
-  const v = -dx * Math.sin(angle) + dy * Math.cos(angle);
-  return (u / rx) ** 2 + (v / ry) ** 2 <= 1;
-}
-
-export function targetMask(id) {
-  if (!ORDERS.some(order => order.id === id)) throw new Error('Unknown latte pattern');
+export function targetMask() {
   const mask = new Float32Array(SIZE * SIZE);
   for (let j = 0; j < SIZE; j++) {
     for (let i = 0; i < SIZE; i++) {
       const x = (i + 0.5) / SIZE, y = (j + 0.5) / SIZE;
-      let filled = false;
-      if (id === 'heart') {
-        const u = (x - 0.5) / 0.245, v = (0.49 - y) / 0.245;
-        filled = (u * u + v * v - 1) ** 3 - u * u * v ** 3 <= 0;
-      } else {
-        const count = id === 'tulip' ? 3 : 7;
-        for (let k = 0; k < count; k++) {
-          const t = k / (count - 1), cy = 0.30 + t * 0.38;
-          const rx = id === 'tulip' ? 0.085 + t * 0.065 : 0.045 + t * 0.105;
-          const ry = id === 'tulip' ? 0.052 : 0.022;
-          for (const side of [-1, 1]) {
-            filled ||= ellipse(x, y, 0.5 + side * rx * 0.74, cy, rx, ry, side * -0.40);
-          }
-        }
-        filled ||= ellipse(x, y, 0.5, 0.53, 0.014, 0.27);
-        filled ||= ellipse(x, y, 0.5, 0.26, 0.038, 0.05);
-      }
-      mask[j * SIZE + i] = filled && inCup(x, y) ? 1 : 0;
+      const u = (x - 0.5) / 0.245, v = (0.49 - y) / 0.245;
+      mask[j * SIZE + i] = (u * u + v * v - 1) ** 3 - u * u * v ** 3 <= 0 && inCup(x, y) ? 1 : 0;
     }
   }
   return mask;

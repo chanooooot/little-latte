@@ -145,7 +145,7 @@ export async function createScene(host) {
       if (!raycaster.ray.intersectPlane(plane, intersection)) return null;
       return [intersection.x / 2.95 + .5, intersection.z / 2.95 + .5];
     },
-    render(point, pouring, active, flow) {
+    render(point, pouring, active) {
       const x = (point[0] - .5) * 2.95, z = (point[1] - .5) * 2.95;
       const hoverHeight = pouring ? .75 : 1.03;
       pitcher.rotation.z = pouring ? .65 : -.12;
@@ -158,7 +158,7 @@ export async function createScene(host) {
         end.set(x, 1.255, z);
         direction.copy(start).sub(end);
         stream.position.copy(start).add(end).multiplyScalar(.5);
-        stream.scale.set(.6 + flow * .16, direction.length(), .6 + flow * .16);
+        stream.scale.set(1.08, direction.length(), 1.08);
         stream.quaternion.setFromUnitVectors(up, direction.normalize());
       }
       aimRing.visible = active && !pouring;
