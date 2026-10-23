@@ -1,8 +1,8 @@
 import { SIZE } from './game.js';
 
 export async function createScene(host) {
-  // Pinned CDN module keeps this static project buildless.
-  const THREE = await import('https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js');
+  // Keep Three.js 0.180.0 local so CDN delays cannot block startup.
+  const THREE = await import('./vendor/three/three.module.min.js');
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.shadowMap.enabled = true;

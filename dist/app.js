@@ -1,5 +1,5 @@
 import { SIZE, ROUND_SECONDS, ORDERS, targetMask, pourSegment, scoreMask, secondsLeft, inCup, tiltAim } from './game.js?v=orders6';
-import { createScene } from './scene.js';
+import { createScene } from './scene.js?v=local-three1';
 
 const $ = id => document.getElementById(id);
 const phone = matchMedia('(pointer: coarse)').matches;
@@ -199,6 +199,7 @@ function tick(now) {
 
 try {
   scene = await createScene($('scene'));
+  $('start').textContent = 'Start pouring';
   $('start').disabled = false;
   requestAnimationFrame(tick);
 } catch (error) {

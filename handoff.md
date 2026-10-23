@@ -39,4 +39,4 @@ Commit focused changes and push `main`; GitHub Pages deploys automatically. Use 
 
 ## Known Limits
 
-Foam is a soft brush rather than fluid physics. The Three.js module loads from jsDelivr, so initial play needs network access and WebGL. Motion controls require browser permission and a physical sensor.
+Foam is a soft brush rather than fluid physics. Three.js 0.180.0 is bundled in `dist/vendor/three/` with its MIT license, so startup does not depend on a CDN. WebGL is required. Motion controls require browser permission and a physical sensor.

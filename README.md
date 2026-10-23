@@ -23,4 +23,4 @@ npm test
 npm run check
 ```
 
-The site is static HTML, CSS, and JavaScript in `dist/`. Three.js loads from jsDelivr. It needs internet access and WebGL. Phone tilt needs HTTPS and motion sensor access. Foam is a soft brush, not a fluid simulation. Scoring compares the poured shape with a heart using a small alignment tolerance. No accounts, server data, analytics, or leaderboard.
+The site is static HTML, CSS, and JavaScript in `dist/`. Three.js 0.180.0 is bundled in `dist/vendor/three/` with its MIT license, so startup does not depend on a CDN. WebGL is required. Phone tilt needs HTTPS and motion sensor access. Foam is a soft brush, not a fluid simulation. Scoring compares the poured shape with a heart using a small alignment tolerance. No accounts, server data, analytics, or leaderboard.
