@@ -1,4 +1,4 @@
-import { SIZE, ROUND_SECONDS, ORDERS, targetMask, pourSegment, scoreMask, secondsLeft, inCup, tiltAim } from './game.js?v=orders3';
+import { SIZE, ROUND_SECONDS, ORDERS, targetMask, pourSegment, scoreMask, secondsLeft, inCup, tiltAim } from './game.js?v=orders5';
 import { createScene } from './scene.js';
 
 const $ = id => document.getElementById(id);
@@ -16,13 +16,17 @@ function showOrder() {
   $('client-name').textContent = order.client;
   $('order-name').textContent = order.name;
   $('client-avatar').style.setProperty('--avatar', order.color);
-  const canvas = $('target-preview'), context = canvas.getContext('2d'), preview = context.createImageData(SIZE, SIZE);
-  for (let index = 0; index < target.length; index++) {
+  drawArt($('target-preview'), target);
+}
+
+function drawArt(canvas, art) {
+  const context = canvas.getContext('2d'), preview = context.createImageData(SIZE, SIZE);
+  for (let index = 0; index < art.length; index++) {
     const pixel = index * 4;
-    const milk = target[index] > 0;
-    preview.data[pixel] = milk ? 255 : 112;
-    preview.data[pixel + 1] = milk ? 248 : 77;
-    preview.data[pixel + 2] = milk ? 231 : 56;
+    const milk = art[index] > 0;
+    preview.data[pixel] = milk ? 255 : 55;
+    preview.data[pixel + 1] = milk ? 252 : 33;
+    preview.data[pixel + 2] = milk ? 239 : 22;
     preview.data[pixel + 3] = 255;
   }
   context.putImageData(preview, 0, 0);
@@ -102,6 +106,8 @@ function finishRound() {
   phase = 'result'; resetInput(); stopTilt();
   $('play-hint').hidden = true; $('finish').hidden = true; $('recenter').hidden = true;
   $('score').textContent = scoreMask(mask, target);
+  $('result-client').textContent = order.client;
+  drawArt($('your-preview'), mask); drawArt($('order-preview'), target);
   $('result-panel').hidden = false; $('again').focus({ preventScroll: true });
 }
 

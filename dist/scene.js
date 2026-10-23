@@ -16,7 +16,7 @@ export async function createScene(host) {
   const scene = new THREE.Scene();
   const camera = new THREE.OrthographicCamera(-4, 4, 3, -3, .1, 50);
   camera.position.set(0, 8.4, 5.7);
-  camera.lookAt(0, .65, 0);
+  camera.lookAt(0, 1.05, 0);
   scene.add(new THREE.HemisphereLight(0xfff8e9, 0x96866a, 2.4));
   const light = new THREE.DirectionalLight(0xfff5df, 3.3);
   light.position.set(-3.5, 8, 4);
