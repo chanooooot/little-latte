@@ -1,9 +1,12 @@
 export const SIZE = 128;
 export const ROUND_SECONDS = 30;
 export const ORDERS = [
-  { id: 'heart', name: 'Heart' },
-  { id: 'tulip', name: 'Tulip' },
-  { id: 'leaf', name: 'Leaf' },
+  { id: 'heart', name: 'Heart', client: 'Mina', color: '#d89b85' },
+  { id: 'tulip', name: 'Tulip', client: 'Theo', color: '#7a9b87' },
+  { id: 'leaf', name: 'Leaf', client: 'Aya', color: '#8b9fc7' },
+  { id: 'heart', name: 'Heart', client: 'Noor', color: '#c391a9' },
+  { id: 'tulip', name: 'Tulip', client: 'Jun', color: '#c5a16a' },
+  { id: 'leaf', name: 'Leaf', client: 'Luca', color: '#7a9aa1' },
 ];
 
 export function secondsLeft(deadline, now) {

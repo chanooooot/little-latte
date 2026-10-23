@@ -21,7 +21,8 @@ test('heart rewards its shape, not an empty or flooded cup', () => {
 });
 
 test('every order has a distinct, scoreable target', () => {
-  const targets = ORDERS.map(order => targetMask(order.id));
+  const targets = [...new Map(ORDERS.map(order => [order.id, targetMask(order.id)])).values()];
+  assert.equal(ORDERS.length, 6);
   assert.equal(targets.length, 3);
   for (const target of targets) assert.equal(scoreMask(target, target), 100);
   assert.notDeepEqual(targets[0], targets[1]);

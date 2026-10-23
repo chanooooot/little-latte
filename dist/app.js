@@ -1,4 +1,4 @@
-import { SIZE, ROUND_SECONDS, ORDERS, targetMask, pourSegment, scoreMask, secondsLeft, inCup, tiltAim } from './game.js?v=orders1';
+import { SIZE, ROUND_SECONDS, ORDERS, targetMask, pourSegment, scoreMask, secondsLeft, inCup, tiltAim } from './game.js?v=orders3';
 import { createScene } from './scene.js';
 
 const $ = id => document.getElementById(id);
@@ -13,7 +13,9 @@ let pointerDown = false, keyboardPour = false, pointerId = null, previous = null
 let order = ORDERS[0], target = targetMask(order.id);
 
 function showOrder() {
+  $('client-name').textContent = order.client;
   $('order-name').textContent = order.name;
+  $('client-avatar').style.setProperty('--avatar', order.color);
   const canvas = $('target-preview'), context = canvas.getContext('2d'), preview = context.createImageData(SIZE, SIZE);
   for (let index = 0; index < target.length; index++) {
     const pixel = index * 4;
