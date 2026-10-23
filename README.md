@@ -18,6 +18,7 @@ Open http://127.0.0.1:5183. There is no build step and no npm dependency install
 - **Fresh canvas** clears the art without resetting the timer.
 - **Serve latte** scores early; otherwise the round ends automatically at 30 seconds.
 - Keyboard: focus the cup, use arrow keys to aim, hold Space to pour, and press F for fine/full flow.
+- On a phone, tap **Use phone tilt**, allow motion access if asked, then tilt to aim and hold the cup to pour. **Recenter tilt** sets the current angle as the middle. Touch aiming remains available.
 - Sound is optional and starts muted.
 
 ## Checks

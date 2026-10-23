@@ -1,6 +1,14 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { SIZE, ORDERS, targetMask, scoreMask, pourSegment, secondsLeft, inCup } from '../dist/game.js';
+import { SIZE, ORDERS, targetMask, scoreMask, pourSegment, secondsLeft, inCup, tiltAim } from '../dist/game.js';
+
+test('tilt centers, follows screen rotation, ignores tiny motion, and clamps edges', () => {
+  assert.deepEqual(tiltAim(20, 10, [20, 10]), [.5, .5]);
+  assert.deepEqual(tiltAim(20, 11, [20, 10]), [.5, .5]);
+  assert.ok(tiltAim(20, 20, [20, 10])[0] > .5);
+  assert.ok(tiltAim(30, 10, [20, 10], 90)[0] > .5);
+  assert.deepEqual(tiltAim(20, 90, [20, 10]), [1, .5]);
+});
 
 test('each order rewards its own shape, not an empty or flooded cup', () => {
   const empty = new Float32Array(SIZE * SIZE);

@@ -14,6 +14,16 @@ export function inCup(x, y) {
   return (x - 0.5) ** 2 + (y - 0.5) ** 2 <= 0.48 ** 2;
 }
 
+export function tiltAim(beta, gamma, origin, angle = 0) {
+  const pitch = ((beta - origin[0] + 540) % 360) - 180;
+  const roll = gamma - origin[1];
+  const radians = angle * Math.PI / 180;
+  const x = roll * Math.cos(radians) + pitch * Math.sin(radians);
+  const y = pitch * Math.cos(radians) - roll * Math.sin(radians);
+  const position = value => Math.max(0, Math.min(1, .5 + Math.sign(value) * Math.max(0, Math.abs(value) - 1) / 36));
+  return [position(x), position(y)];
+}
+
 function ellipse(x, y, cx, cy, rx, ry, angle = 0) {
   const dx = x - cx, dy = y - cy;
   const u = dx * Math.cos(angle) + dy * Math.sin(angle);

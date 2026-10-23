@@ -1,4 +1,4 @@
-import { SIZE, ORDERS, ROUND_SECONDS, targetMask, pourSegment, scoreMask, secondsLeft, inCup } from './game.js';
+import { SIZE, ORDERS, ROUND_SECONDS, targetMask, pourSegment, scoreMask, secondsLeft, inCup, tiltAim } from './game.js';
 import { createScene } from './scene.js';
 
 const $ = id => document.getElementById(id);
@@ -8,6 +8,47 @@ let scene, pointerDown = false, keyboardPour = false, pointerId = null;
 let aim = [.5, .5], previous = null, dwell = 0, previousFrame = performance.now();
 let soundEnabled = false, audio, pourSound, soundGain, lastSecond = 30;
 const keys = new Set();
+let tiltEnabled = false, tiltOrigin = null, tiltReading = null, tiltTarget = [.5, .5], tiltTimeout;
+
+function recenterTilt() {
+  if (!tiltReading) return;
+  tiltOrigin = tiltReading;
+  tiltTarget = aim = [.5, .5]; previous = null; dwell = 0;
+  setStatus('Tilt centered. Hold the cup to pour.');
+}
+
+function onTilt(event) {
+  if (!Number.isFinite(event.beta) || !Number.isFinite(event.gamma)) return;
+  const angle = screen.orientation?.angle ?? window.orientation ?? 0;
+  tiltReading = [event.beta, event.gamma, angle];
+  if (!tiltOrigin || tiltOrigin[2] !== angle) recenterTilt();
+  tiltTarget = tiltAim(event.beta, event.gamma, tiltOrigin, angle);
+  if (!tiltEnabled) {
+    clearTimeout(tiltTimeout); tiltEnabled = true;
+    $('tilt-button').disabled = false; $('tilt-button').textContent = 'Use touch aiming';
+    $('recenter-button').hidden = false; $('controls-hint').hidden = true; $('tilt-hint').hidden = false;
+  }
+}
+
+function stopTilt(message) {
+  clearTimeout(tiltTimeout); window.removeEventListener('deviceorientation', onTilt);
+  tiltEnabled = false; tiltOrigin = tiltReading = null;
+  $('tilt-button').disabled = false; $('tilt-button').textContent = 'Use phone tilt';
+  $('recenter-button').hidden = true; $('controls-hint').hidden = false; $('tilt-hint').hidden = true;
+  if (message) setStatus(message);
+}
+
+async function toggleTilt() {
+  if (tiltEnabled) { stopTilt('Touch aiming is on.'); return; }
+  $('tilt-button').disabled = true; $('tilt-button').textContent = 'Waiting for tilt…';
+  try {
+    if (typeof DeviceOrientationEvent.requestPermission === 'function' && await DeviceOrientationEvent.requestPermission() !== 'granted') {
+      stopTilt('Motion access denied. Use touch aiming.'); return;
+    }
+    window.addEventListener('deviceorientation', onTilt);
+    tiltTimeout = setTimeout(() => stopTilt('No tilt sensor found. Use touch aiming.'), 3000);
+  } catch { stopTilt('Motion access unavailable. Use touch aiming.'); }
+}
 
 function drawCup(canvas, foam) {
   const ctx = canvas.getContext('2d'), w = canvas.width, c = w / 2, r = w * .37;
@@ -63,6 +104,7 @@ function resetCup() {
 function startRound() {
   if (!scene || phase === 'playing') return;
   resetCup(); phase = 'playing'; deadline = performance.now() + ROUND_SECONDS * 1000; lastSecond = 30;
+  if (tiltEnabled) recenterTilt();
   $('start-button').querySelector('span').textContent = 'Serve latte';
   $('clear-button').disabled = false; $('help-button').disabled = true;
   document.querySelectorAll('.order-tab').forEach(tab => { tab.disabled = true; });
@@ -135,10 +177,11 @@ $('scene').addEventListener('pointerdown', event => {
   if (event.button !== 0 || phase !== 'playing' || pointerId !== null) return;
   event.preventDefault(); $('scene').focus({ preventScroll: true });
   pointerId = event.pointerId; $('scene').setPointerCapture(pointerId);
-  movePointer(event); pointerDown = true; previous = null; dwell = 0;
+  if (!tiltEnabled) movePointer(event);
+  pointerDown = true; previous = null; dwell = 0;
 });
 $('scene').addEventListener('pointermove', event => {
-  if (pointerId === null || event.pointerId === pointerId) movePointer(event);
+  if (!tiltEnabled && (pointerId === null || event.pointerId === pointerId)) movePointer(event);
 });
 for (const type of ['pointerup', 'pointercancel', 'lostpointercapture']) $('scene').addEventListener(type, event => {
   if (pointerId === event.pointerId) resetInput();
@@ -178,6 +221,9 @@ $('sound-button').addEventListener('click', () => {
   $('sound-button').setAttribute('aria-pressed', String(soundEnabled));
   $('sound-button').setAttribute('aria-label', soundEnabled ? 'Turn sound off' : 'Turn sound on');
 });
+$('tilt-button').addEventListener('click', toggleTilt);
+$('recenter-button').addEventListener('click', recenterTilt);
+if (window.isSecureContext && 'DeviceOrientationEvent' in window && matchMedia('(pointer: coarse)').matches) $('tilt-controls').hidden = false;
 
 function tick(now) {
   const dt = Math.min((now - previousFrame) / 1000, .05); previousFrame = now;
@@ -193,6 +239,10 @@ function tick(now) {
     if (remaining <= 0) finishRound();
   }
   if (phase === 'playing') {
+    if (tiltEnabled) {
+      const smoothing = 1 - Math.exp(-dt * 14);
+      aim = aim.map((value, i) => value + (tiltTarget[i] - value) * smoothing);
+    }
     if (keys.has('ArrowLeft')) aim[0] -= dt * .32;
     if (keys.has('ArrowRight')) aim[0] += dt * .32;
     if (keys.has('ArrowUp')) aim[1] -= dt * .32;
